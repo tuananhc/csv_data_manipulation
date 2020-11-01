@@ -33,7 +33,7 @@ typedef double csv_t[MAXROWS][MAXCOLS];
 void get_csv_data(csv_t D, head_t H[], int *dr, int *dc, int argc,
                   char *argv[]);
 void error_and_exit(char *msg);
-void print_prompt(void);
+void print_prompt(void); 
 int get_command(int dc, int *command, int ccols[], int *nccols);
 void handle_command(int command, int ccols[], int nccols,
                     csv_t D, head_t H[], int dr, int dc);
