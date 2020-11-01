@@ -1,45 +1,3 @@
-/* Program to do "calculations" on numeric CSV data files.
-
-   Skeleton program written by Alistair Moffat, ammoffat@unimelb.edu.au,
-   September 2020, with the intention that it be modified by students
-   to add functionality, as required by the assignment specification.
-
-   Student Authorship Declaration:
-
-   (1) I certify that except for the code provided in the initial skeleton
-   file, the  program contained in this submission is completely my own
-   individual work, except where explicitly noted by further comments that
-   provide details otherwise.  I understand that work that has been developed
-   by another student, or by me in collaboration with other students, or by
-   non-students as a result of request, solicitation, or payment, may not be
-   submitted for assessment in this subject.  I understand that submitting for
-   assessment work developed by or in collaboration with other students or
-   non-students constitutes Academic Misconduct, and may be penalized by mark
-   deductions, or by other penalties determined via the University of
-   Melbourne Academic Honesty Policy, as described at
-   https://academicintegrity.unimelb.edu.au.
-
-   (2) I also certify that I have not provided a copy of this work in either
-   softcopy or hardcopy or any other form to any other student, and nor will I
-   do so until after the marks are released. I understand that providing my
-   work to other students, regardless of my intention or any undertakings made
-   to me by that other student, is also Academic Misconduct.
-
-   (3) I further understand that providing a copy of the assignment
-   specification to any form of code authoring or assignment tutoring service,
-   or drawing the attention of others to such services and code that may have
-   been made available via such a service, may be regarded as Student General
-   Misconduct (interfering with the teaching activities of the University
-   and/or inciting others to commit Academic Misconduct).  I understand that
-   an allegation of Student General Misconduct may arise regardless of whether
-   or not I personally make use of such solutions or sought benefit from such
-   actions.
-
-   Signed by: [Tuan Anh Chau - 1166394]
-   Dated:     [September 12th]
-
-*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -48,33 +6,24 @@
 #include <math.h>
 #include <assert.h>
 
-/* these #defines provided as part of the initial skeleton */
+#define MAXCOLS 	20  	/* maximum number of columns to be handled */
+#define MAXROWS 	999 	/* maximum number of rows to be handled */
+#define LABLEN 		20   	/* maximum length of each column header */
+#define LINELEN 	100 	/* maximum length of command lines */
+#define ERROR 		(-1) 	/* error return value from some functions */
+#define O_NOC 		'-' 	/* the "do nothing" command */
+#define O_IND 		'i' 	/* the "index" command */
+#define O_ANA 		'a' 	/* the "analyze" command */
+#define O_DPY 		'd' 	/* the "display" command */
+#define O_PLT 		'p' 	/* the "plot" command */
+#define O_SRT 		's' 	/* the "sort" command */
+#define CH_COMMA 	',' 	/* comma character */
+#define CH_CR 		'\r'    /* pesky CR character in DOS-format files */
+#define CH_NL 		'\n'    /* newline character */
+#define MAXPLOTLEN	60	/* maximum length of a column in a plot */
+#define EPSILON 	1e-6    /* deemed 2 double values are equal */
 
-#define MAXCOLS 20  /* maximum number of columns to be handled */
-#define MAXROWS 999 /* maximum number of rows to be handled */
-#define LABLEN 20   /* maximum length of each column header */
-#define LINELEN 100 /* maximum length of command lines */
-
-#define ERROR (-1) /* error return value from some functions */
-
-#define O_NOC '-' /* the "do nothing" command */
-#define O_IND 'i' /* the "index" command */
-#define O_ANA 'a' /* the "analyze" command */
-#define O_DPY 'd' /* the "display" command */
-#define O_PLT 'p' /* the "plot" command */
-#define O_SRT 's' /* the "sort" command */
-
-#define CH_COMMA ',' /* comma character */
-#define CH_CR '\r'   /* pesky CR character in DOS-format files */
-#define CH_NL '\n'   /* newline character */
-
-/* if you wish to add further #defines, put them below this comment */
-
-#define EPSILON 1e-6 /* determine whether 2 doubles are deemed equal */
-
-/* and then, here are some types for you to work with */
 typedef char head_t[LABLEN + 1];
-
 typedef double csv_t[MAXROWS][MAXCOLS];
 
 /****************************************************************/
@@ -123,13 +72,11 @@ main(int argc, char *argv[]) {
     int nccols;
     int command;
 
-    /* this next is a bit of magic code that you can ignore for
-	   now, it reads csv data from a file named on the
-	   commandline and saves it to D, H, dr, and dc */
+    /* reads csv data from a file named on the
+       commandline and saves it to D, H, dr, and dc */
     get_csv_data(D, H, &dr, &dc, argc, argv);
 
-    /* ok, all the input data has been read, safe now to start
-	   processing commands against it */
+    /* processing commands against it */
 
     print_prompt();
     while (get_command(dc, &command, ccols, &nccols) != EOF) {
@@ -138,8 +85,6 @@ main(int argc, char *argv[]) {
         print_prompt();
     }
 
-    /* all done, so pack up bat and ball and head home */
-    printf("\nTa daa!!!\n");
     return 0;
 }
 
@@ -610,7 +555,7 @@ print_data(csv_t D, int ccols[], int nccols, int count, int row_num) {
     int i, c;
     for (i = 0; i < nccols; i ++) {
         c = ccols[i];
-        printf(" %7.2f", D[row_num][c]);
+        printf(" %7.1f", D[row_num][c]);
     }
     if (count == 1) {
         printf("    (%2d instance)%c", count, CH_NL);
