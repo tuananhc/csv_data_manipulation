@@ -681,5 +681,3 @@ plot(int scale, int ccols[], int nccols, int count_arr[],
 }
 
 /* ------------------------------- */
-
-/* Algorithms are fun! */
